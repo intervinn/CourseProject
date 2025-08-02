@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "SqlServer": "Data Source=NIKITA\\SQLEXPRESS;Initial Catalog=Motorcycles;Trusted_Connection=True;TrustServerCertificate=True"
+  }
+}

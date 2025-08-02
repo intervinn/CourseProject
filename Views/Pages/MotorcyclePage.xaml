@@ -1,0 +1,116 @@
+﻿<Page
+    x:Class="CourseProject.Views.Pages.MotorcyclePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CourseProject.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:CourseProject.Models"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:conv="clr-namespace:CourseProject.Helpers"
+    Title="MotorcyclePage"
+    
+    d:DataContext="{d:DesignInstance local:MotorcyclePage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    ScrollViewer.CanContentScroll="False"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <!-- Basic Information -->
+            <TextBlock Text="Модель" FontWeight="Bold"/>
+            <ui:TextBox Text="{Binding ViewModel.Model}"/>
+
+            <TextBlock Text="Страна"/>
+            <ui:TextBox Text="{Binding ViewModel.Country}"/>
+
+            <TextBlock Text="Тип"/>
+            <ComboBox 
+                ItemsSource="{Binding ViewModel.MotorcycleTypes}"
+                SelectedItem="{Binding ViewModel.Type}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumLocalizer}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Text="Цвет"/>
+            <ui:TextBox Text="{Binding ViewModel.Color}"/>
+
+            <TextBlock Text="Год производства"/>
+            <ui:NumberBox Value="{Binding ViewModel.ProductionYear}"/>
+
+            <TextBlock Text="Макс. скорость (км/ч)"/>
+            <ui:NumberBox Value="{Binding ViewModel.MaxSpeed}"/>
+
+            <TextBlock Text="Рег. номер"/>
+            <ui:TextBox Text="{Binding ViewModel.RegistrationNumber}"/>
+
+            <TextBlock Text="Дата техосмотра"/>
+            <DatePicker SelectedDate="{Binding ViewModel.LastInspectionDate}"/>
+
+            <TextBlock Text="Владелец" FontWeight="Bold" Margin="0,15,0,0"/>
+            <ComboBox 
+                ItemsSource="{Binding ViewModel.Persons}"
+                SelectedItem="{Binding ViewModel.SelectedOwner}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding FirstName}"/>
+                            <Run Text=" "/>
+                            <Run Text="{Binding LastName}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Text="Производитель"/>
+            <ComboBox 
+                ItemsSource="{Binding ViewModel.Companies}"
+                SelectedItem="{Binding ViewModel.SelectedManufacturer}"
+                DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Шины"/>
+            <ComboBox 
+                ItemsSource="{Binding ViewModel.TiresList}"
+                SelectedItem="{Binding ViewModel.SelectedTires}"
+                DisplayMemberPath="Model"/>
+            
+            <TextBlock Text="Фары"/>
+            <ComboBox 
+                ItemsSource="{Binding ViewModel.HeadlightsList}"
+                SelectedItem="{Binding ViewModel.SelectedHeadlights}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Type, Converter={StaticResource EnumLocalizer}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- Comfort Features -->
+            <TextBlock Text="Удобства" FontWeight="Bold" Margin="0,15,0,0"/>
+            <ItemsControl ItemsSource="{Binding ViewModel.ComfortFeatures}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox 
+                            IsChecked="{Binding IsSelected}"
+                            Content="{Binding DisplayName}"
+                            Margin="0,5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ui:Button 
+                Command="{Binding ViewModel.ConfirmCommand}" 
+                Content="Подтвердить"
+                HorizontalAlignment="Right"
+                Margin="0,20,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
